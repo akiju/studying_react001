@@ -41,10 +41,11 @@ const onClickAdd = () => {
       const modosuli = modosuDiv.childNodes.item(0);
       const modosuText = modosuli.innerText;
 
-      const incompleteDiv = document.createElement("div");
-      incompleteDiv.className = "list-row";
-      const incomplateli = document.createElement("li");
-      incomplateli.innerText = itemText;
+      test(modosuDiv, modosuText);
+      // const incompleteDiv = document.createElement("div");
+      // incompleteDiv.className = "list-row";
+      // const incomplateli = document.createElement("li");
+      // incomplateli.innerText = itemText;
     });
 
     //追加
@@ -77,3 +78,56 @@ const onClickAdd = () => {
 document.getElementById("add-button").addEventListener("click", function () {
   return onClickAdd();
 });
+
+function test(obj, str) {
+  console.log(str);
+  console.log(obj);
+}
+
+/********************************
+ ** 未完了欄に指定タスク名を追加する **
+ *********************************/
+function AddinComplete(AddTaskName) {
+  const div = document.createElement("div");
+  div.className = "list-row";
+  const li = document.createElement("li");
+  li.innerText = AddTaskName;
+  const completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+
+  //** 完了ボタンを押した時の挙動 **//
+  completeButton.addEventListener("click", () => {
+    //完了対象のToDoの情報を取得
+    const targetDiv = completeButton.parentNode;
+    const targetli = targetDiv.childNodes.item(0);
+    const itemText = targetli.innerText;
+
+    //** 完了TODO欄に入れる */
+
+    //div li　button を生成
+    const completeDiv = document.createElement("div");
+    completeDiv.className = "list-row";
+    const complateli = document.createElement("li");
+    complateli.innerText = itemText;
+    const modosu = document.createElement("button");
+    modosu.innerText = "戻す";
+
+    //** 戻すボタンの挙動 **/
+    modosu.addEventListener("click", () => {
+      //戻す対象のToDoの情報を取得
+      const modosuDiv = modosu.parentNode;
+      const modosuli = modosuDiv.childNodes.item(0);
+      const modosuText = modosuli.innerText;
+    });
+
+    //追加
+    completeDiv.appendChild(complateli);
+    completeDiv.appendChild(modosu);
+    document.getElementById("complete-list").appendChild(completeDiv);
+
+    //追加したタスクを消す
+    document.getElementById("incomplete-list").removeChild(targetDiv);
+  });
+}
