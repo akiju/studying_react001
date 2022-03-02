@@ -82,6 +82,65 @@ document.getElementById("add-button").addEventListener("click", function () {
 function test(obj, str) {
   console.log(str);
   console.log(obj);
+  console.log(g_Div);
+}
+
+/**
+ * 生成したタスクコンテンツ
+ */
+var CreateDiv;
+var CreateLi;
+var CreateButton1;
+var CreateButton2;
+
+/**
+ * 未完了、完了リストに追加するタスクアイテムを生成する
+ * 生成したアイテムは外部変数へ設定する
+ * @param {string} a_AddTaskName 生成するタスク名
+ * @param {number} a_ListFlg　生成したタスクを追加する先の欄フラグ（1:未完了欄用、2:完了欄用）
+ */
+function CreateTaskItem(a_AddTaskName, a_ListFlg = 1) {
+  CreateDiv = document.createElement("div");
+  CreateDiv.className = "list-row";
+  CreateLi = document.createElement("li");
+  CreateLi.innerText = a_AddTaskName;
+
+  //未完了リスト用ボタンコンテンツ生成
+  if (a_ListFlg == 1) {
+    const CreateButton1 = document.createElement("button");
+    CreateButton1.innerText = "完了";
+    const CreateButton2 = document.createElement("button");
+    CreateButton2.innerText = "削除";
+
+    CreateDiv.appendChild(CreateLi);
+    CreateDiv.appendChild(CreateButton1);
+    CreateDiv.appendChild(CreateButton2);
+    // 完了リスト用
+  } else if (a_ListFlg == 2) {
+    const CreateButton1 = document.createElement("button");
+    CreateButton1.innerText = "戻す";
+
+    CreateDiv.appendChild(CreateLi);
+    CreateDiv.appendChild(CreateButton1);
+  }
+}
+
+/**
+ * 処理対象タスクコンテンツ
+ */
+var TargetDiv;
+var TargetLi;
+var TaegetTaskName;
+
+/**
+ * アクション（処理対象）のタスクを特定する。
+ * 特定したコンテンツ情報は外部変数（targetDiv、targetLi、taegetTaskName）に設定される
+ * @param {button} a_Btn アクションを起こしたタスクに付随するボタンコンテンツ（アクションはボタンから始まるからボタンコンテンツをパラメータにする）
+ */
+function GetTargetTaskByBtn(a_Btn) {
+  TargetDiv = a_Btn.parentNode;
+  TargetLi = TargetDiv.childNodes.item(0);
+  TaegetTaskName = TargetLi.innerText;
 }
 
 /********************************
